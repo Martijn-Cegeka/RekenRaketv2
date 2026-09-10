@@ -10,7 +10,7 @@ created: '2026-09-11'
 updated: '2026-09-11'
 binds: ['4.1 Fuel-Tank Progress Visualization', '4.2 Daily Practice Session & Batching', '4.3 Answer & Retry Mechanic', '4.4 Daily Liftoff & Flight Tiers', '4.5 Math Content Configuration']
 sources: ['_bmad-output/planning-artifacts/prds/prd-RekenRaketv2-2026-09-10/prd.md']
-companions: []
+companions: ['_bmad-output/planning-artifacts/ux-designs/ux-RekenRaketv2-2026-09-11/DESIGN.md', '_bmad-output/planning-artifacts/ux-designs/ux-RekenRaketv2-2026-09-11/EXPERIENCE.md']
 ---
 
 # Architecture Spine — RekenRaket
@@ -62,6 +62,12 @@ companions: []
 - **Prevents:** a half-built, unmanaged service worker causing stale-cache bugs worse than no offline support at all
 - **Rule:** no service worker is registered. The app requires network on load; installability is limited to a home-screen icon (manifest + `apple-touch-icon`), not true offline operation. Revisit if network reliability at point of use becomes a problem (see Deferred).
 
+### AD-7 — UI sub-elements render as internal Shadow DOM fragments, not separate Custom Elements
+
+- **Binds:** `rr-keypad`, `rr-run-progress`, `rr-settings-row` (named in `EXPERIENCE.md` Component Patterns) — UI patterns each used within exactly one screen-level component
+- **Prevents:** two stories independently deciding whether a UX-named component pattern needs its own Custom Element and file, fragmenting the four-screen structure into an unbounded number of files with no reuse to justify it
+- **Rule:** a UX-named component pattern gets its own top-level Custom Element under `src/components/` only if it's rendered from more than one screen-level component; otherwise it's plain DOM rendered inside its parent screen component's `render(state)`, styled within that parent's Shadow DOM. `rr-keypad` and `rr-run-progress` render inside `rr-run-view.js`; `rr-settings-row` renders (repeated) inside `rr-settings.js`.
+
 ### Dependency direction
 
 ```mermaid
@@ -83,6 +89,7 @@ No arrow ever points backward: `domain/` and `db.js` never import `store.js` or 
 | Events | `CustomEvent` names are lowercase, no dashes, per DOM convention (e.g. `cardanswered`, `runcompleted`, `liftoffdismissed`). |
 | Data & formats | Card id = `{operation}:{operandA}:{operandB}` (stable, deterministic, doubles as an IndexedDB key). Dates/timestamps stored as ISO 8601 strings. |
 | State & cross-cutting | All state mutation goes through `store.js` action-style functions (e.g. `submitAnswer(cardId, value)`); components never set state fields directly. Retry cap (3) and box count (5) are named constants in `src/domain/`, not magic numbers scattered across components. |
+| Styling | Text sizing uses `rem`, never fixed `px`, so the OS Dynamic Type setting is honored (`DESIGN.md` Typography). Any animation (e.g. Liftoff) is wrapped in `@media (prefers-reduced-motion: reduce)`, collapsing to the end state instantly when set. |
 
 ## Stack
 
@@ -112,9 +119,9 @@ No arrow ever points backward: `domain/` and `db.js` never import `store.js` or 
       tiers.js                  # flight tier calculation (FR-9)
     components/
       rr-fuel-tanks.js
-      rr-run-view.js
+      rr-run-view.js           # renders keypad + run-progress internally (AD-7)
       rr-liftoff.js
-      rr-settings.js
+      rr-settings.js           # renders settings rows internally (AD-7)
     styles/
       base.css
   tests/
