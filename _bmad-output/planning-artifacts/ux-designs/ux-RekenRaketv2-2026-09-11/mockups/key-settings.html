@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  Key-screen mock: Settings.
+  Governed by: EXPERIENCE.md § Component Patterns (Settings row), § State
+  Patterns (lowering/raising a Number Range rows), § Key Flows Flow 2.
+  Visual tokens: DESIGN.md § Components (rr-settings-row), § Shapes (rounded/sm
+  for denser rows). Two states shown: the settings list, and the
+  progress-loss confirmation popup triggered by lowering a range.
+  Spine wins on conflict with this mock.
+-->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>RekenRaket — Instellingen (mock)</title>
+<style>
+  body { margin:0; padding:40px; background:#e7e5e4; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; gap:40px; flex-wrap:wrap; }
+  .frame { width:460px; height:500px; border-radius:20px; background:#FFFFFF; box-shadow:0 12px 30px rgba(11,29,58,0.18); padding:24px; box-sizing:border-box; position:relative; }
+  .caption { width:460px; font-size:13px; color:#4B5A73; margin-top:8px; }
+  h1 { font-size:18px; color:#0B1D3A; margin:0 0 16px; font-weight:700; }
+  .row { display:flex; align-items:center; justify-content:space-between; padding:14px 4px; border-top:1px solid #D8E6F0; }
+  .row:first-of-type { border-top:none; }
+  .label { font-size:15px; color:#0B1D3A; font-weight:600; }
+  .value { font-size:14px; color:#4B5A73; }
+  .toggle { width:40px; height:22px; border-radius:9999px; background:#2FD3B0; position:relative; }
+  .toggle .dot { width:18px; height:18px; border-radius:9999px; background:#FFFFFF; position:absolute; top:2px; right:2px; }
+  .toggle.off { background:#D8E6F0; }
+  .toggle.off .dot { left:2px; right:auto; }
+  .popup { position:absolute; inset:40px 24px; background:#FFFFFF; border-radius:16px; box-shadow:0 8px 24px rgba(11,29,58,0.25); padding:24px; }
+  .popup h2 { font-size:16px; color:#0B1D3A; margin:0 0 10px; }
+  .popup p { font-size:14px; color:#4B5A73; margin:0 0 20px; }
+  .popup .actions { display:flex; gap:10px; justify-content:flex-end; }
+  .btn { padding:10px 18px; border-radius:9999px; font-size:14px; font-weight:700; border:none; }
+  .btn.primary { background:#FF7A3D; color:#FFFFFF; }
+  .btn.secondary { background:#EFFAFF; color:#0B1D3A; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="frame">
+      <h1>Instellingen</h1>
+      <div class="row"><div class="label">Optellen</div><div style="display:flex;align-items:center;gap:12px"><div class="value">1 t/m 20</div><div class="toggle"><div class="dot"></div></div></div></div>
+      <div class="row"><div class="label">Aftrekken</div><div style="display:flex;align-items:center;gap:12px"><div class="value">1 t/m 10</div><div class="toggle"><div class="dot"></div></div></div></div>
+      <div class="row"><div class="label">Vermenigvuldigen</div><div style="display:flex;align-items:center;gap:12px"><div class="value">1 t/m 5</div><div class="toggle"><div class="dot"></div></div></div></div>
+      <div class="row"><div class="label">Delen</div><div style="display:flex;align-items:center;gap:12px"><div class="value">uit</div><div class="toggle off"><div class="dot"></div></div></div></div>
+    </div>
+    <div class="caption">Instellingen — lijst. Per bewerking: aan/uit + cijferbereik. Rustiger, dichter, geen speels toontje.</div>
+  </div>
+
+  <div>
+    <div class="frame">
+      <h1>Instellingen</h1>
+      <div class="row"><div class="label">Optellen</div><div style="display:flex;align-items:center;gap:12px"><div class="value">1 t/m 20</div><div class="toggle"><div class="dot"></div></div></div></div>
+      <div class="row"><div class="label">Aftrekken</div><div style="display:flex;align-items:center;gap:12px"><div class="value">1 t/m 10</div><div class="toggle"><div class="dot"></div></div></div></div>
+      <div class="popup">
+        <h2>Bereik verkleinen?</h2>
+        <p>Sommen buiten het nieuwe bereik verdwijnen, samen met hun voortgang.</p>
+        <div class="actions">
+          <button class="btn secondary">Annuleren</button>
+          <button class="btn primary">Toch doorgaan</button>
+        </div>
+      </div>
+    </div>
+    <div class="caption">Instellingen — bevestiging bij verkleinen van een cijferbereik (verlies van voortgang). Verhogen toont dit venster niet.</div>
+  </div>
+</body>
+</html>

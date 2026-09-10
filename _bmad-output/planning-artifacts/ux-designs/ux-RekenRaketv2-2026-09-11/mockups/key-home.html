@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+  Key-screen mock: Home.
+  Governed by: EXPERIENCE.md § Information Architecture (Home row), § State
+  Patterns (cold-open flown / not-yet-flown / unconfigured rows), § Component
+  Patterns (Fuel tanks row). Visual tokens: DESIGN.md § Colors, § Shapes,
+  § Components (rr-fuel-tanks). Two states shown side by side: not-yet-flown
+  and already-flown. Spine wins on conflict with this mock.
+-->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>RekenRaket — Home (mock)</title>
+<style>
+  body { margin:0; padding:40px; background:#e7e5e4; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; gap:40px; flex-wrap:wrap; }
+  .frame { width:520px; height:390px; border-radius:28px; background:linear-gradient(#CDEBFB,#EFFAFF); box-shadow:0 12px 30px rgba(11,29,58,0.18); overflow:hidden; position:relative; padding:28px; box-sizing:border-box; }
+  .caption { width:520px; font-size:13px; color:#4B5A73; margin-top:8px; }
+  h1 { font-size:20px; color:#0B1D3A; margin:0 0 18px; font-weight:700; }
+  .rocket { position:absolute; right:36px; top:28px; font-size:46px; }
+  .tanks { display:flex; gap:14px; margin-top:8px; }
+  .tank { width:56px; height:140px; border-radius:24px; background:#D8E6F0; position:relative; overflow:hidden; border:2px solid #FFFFFF; }
+  .tank .fill { position:absolute; bottom:0; left:0; right:0; background:#2FD3B0; }
+  .cta { margin-top:36px; display:inline-block; background:#FF7A3D; color:#FFFFFF; font-weight:700; font-size:18px; padding:16px 32px; border-radius:9999px; border:none; }
+  .status { margin-top:36px; font-size:18px; color:#0B1D3A; font-weight:700; background:#FFFFFF; display:inline-block; padding:14px 24px; border-radius:16px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="frame">
+      <h1>RekenRaket</h1>
+      <div class="rocket">🚀</div>
+      <div class="tanks">
+        <div class="tank"><div class="fill" style="height:80%"></div></div>
+        <div class="tank"><div class="fill" style="height:55%"></div></div>
+        <div class="tank"><div class="fill" style="height:30%"></div></div>
+        <div class="tank"><div class="fill" style="height:10%"></div></div>
+        <div class="tank"><div class="fill" style="height:0%"></div></div>
+      </div>
+      <button class="cta">Start vandaag</button>
+    </div>
+    <div class="caption">Home — nog niet gevlogen vandaag. Fuel tanks tonen huidige stand (geen cijfers). Primaire actie: "Start vandaag".</div>
+  </div>
+
+  <div>
+    <div class="frame">
+      <h1>RekenRaket</h1>
+      <div class="rocket">🚀</div>
+      <div class="tanks">
+        <div class="tank"><div class="fill" style="height:85%"></div></div>
+        <div class="tank"><div class="fill" style="height:60%"></div></div>
+        <div class="tank"><div class="fill" style="height:35%"></div></div>
+        <div class="tank"><div class="fill" style="height:15%"></div></div>
+        <div class="tank"><div class="fill" style="height:5%"></div></div>
+      </div>
+      <div class="status">Vandaag al gevlogen! 🚀</div>
+    </div>
+    <div class="caption">Home — vandaag al gevlogen. Zelfde tanks, andere status-affordance; geen manier om Liftoff opnieuw te starten.</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  Key-screen mock: Run (session view).
+  Governed by: EXPERIENCE.md § Component Patterns (Keypad / direct-digit
+  buttons row, Run progress row), § State Patterns (correct-first-try /
+  incorrect-before-cap rows), § Key Flows Flow 1 steps 4-6. Visual tokens:
+  DESIGN.md § Colors (retry-sand, rocket-orange), § Components (rr-keypad,
+  rr-run-progress). Two states shown: normal answer state, and a retry
+  ("Probeer het nog eens") state. Spine wins on conflict with this mock.
+-->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>RekenRaket — Run (mock)</title>
+<style>
+  body { margin:0; padding:40px; background:#e7e5e4; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; gap:40px; flex-wrap:wrap; }
+  .frame { width:420px; height:560px; border-radius:28px; background:linear-gradient(#CDEBFB,#EFFAFF); box-shadow:0 12px 30px rgba(11,29,58,0.18); padding:28px; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; }
+  .caption { width:420px; font-size:13px; color:#4B5A73; margin-top:8px; }
+  .progress { font-size:14px; color:#FF7A3D; font-weight:700; align-self:flex-start; }
+  .card { margin-top:24px; background:#FFFFFF; border-radius:16px; padding:28px 40px; font-size:40px; font-weight:700; color:#0B1D3A; }
+  .card.retry { background:#F3E9DA; }
+  .hint { margin-top:10px; font-size:15px; color:#4B5A73; }
+  .keypad { margin-top:28px; display:grid; grid-template-columns:repeat(3,72px); gap:14px; }
+  .key { background:#FFFFFF; border-radius:16px; height:64px; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:700; color:#0B1D3A; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="frame">
+      <div class="progress">Run 2 van 2</div>
+      <div class="card">7 × 5 = ?</div>
+      <div class="keypad">
+        <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+        <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+        <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+        <div class="key">⌫</div><div class="key">0</div><div class="key">✓</div>
+      </div>
+    </div>
+    <div class="caption">Run — normale invoerstatus. "Run 2 van 2" alleen zichtbaar bij meer dan één Run per dag.</div>
+  </div>
+
+  <div>
+    <div class="frame">
+      <div class="progress">Run 2 van 2</div>
+      <div class="card retry">7 × 5 = ?</div>
+      <div class="hint">Probeer het nog eens.</div>
+      <div class="keypad">
+        <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+        <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+        <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+        <div class="key">⌫</div><div class="key">0</div><div class="key">✓</div>
+      </div>
+    </div>
+    <div class="caption">Run — na een onjuiste poging. Retry-sand kaart, geen rood, geen zoemer; zelfde kaart opnieuw.</div>
+  </div>
+</body>
+</html>
