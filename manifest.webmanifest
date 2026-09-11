@@ -1,0 +1,9 @@
+{
+  "name": "RekenRaket",
+  "short_name": "RekenRaket",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#CDEBFB",
+  "theme_color": "#0B1D3A",
+  "icons": []
+}
