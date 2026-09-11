@@ -26,6 +26,9 @@ class RrFuelTanks extends HTMLElement {
         :host {
           display: block;
         }
+        :host([hidden]) {
+          display: none;
+        }
         .tanks {
           display: flex;
           flex-wrap: wrap;

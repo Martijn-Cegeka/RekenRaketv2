@@ -33,7 +33,7 @@ export function getAllCards(db) {
   });
 }
 
-function putCards(db, cards) {
+export function putCards(db, cards) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_CARDS, 'readwrite');
     const store = tx.objectStore(STORE_CARDS);
