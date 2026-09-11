@@ -46,7 +46,7 @@ test('Starting practice on a fresh (4-card) deck shows rr-run-view with no "Run 
   expect(cardCount).toBe('4');
 });
 
-test('Starting practice with more than 20 due cards shows "Run 1 of 2" and hides it once each run completes in range', async ({
+test('Starting practice with more than 20 due cards shows "Run 1 of 2"', async ({
   page,
 }) => {
   await page.goto('/index.html');

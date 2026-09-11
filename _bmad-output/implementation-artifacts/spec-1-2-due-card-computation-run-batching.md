@@ -64,6 +64,21 @@ baseline_commit: '06357c7b2abfa15a90a80e225ebf4f1ca0bd58e5'
 - Given a Daily Session needs more than one Run, then "Run X of Y" is shown; given it needs only one Run, then it is hidden entirely.
 - Given a fresh install at default 1-1 ranges, when practice starts, then the session runs without error.
 
+### Review Findings
+
+- [x] [Review][Defer] Numeric run count + English UI copy violate DESIGN.md/EXPERIENCE.md — DESIGN.md's Brand & Style anti-pattern table forbids "numbers, percentages, or scoreboards anywhere in Tiebe's view," but `rr-run-view.js` renders a raw `.run-card-count` integer. EXPERIENCE.md requires "UI language is Dutch throughout" and its own approved microcopy table specifies a static Dutch phrase ("Nog een rondje te gaan.") for the multi-Run indicator — not a numeric "X of Y" counter — while `epic-1-context.md` (loaded as this story's primary planning context) states the same approved copy. The shipped code instead renders English `Run ${n} of ${total}` and an English `"Start today's practice"` button label. [src/components/rr-run-view.js](../../../src/components/rr-run-view.js), [src/main.js](../../../src/main.js) — deferred: was wrongly specced
+- [x] [Review][Patch] e2e test title overstates its own coverage [tests/e2e/home.spec.js:49] — title claims "...and hides it once each run completes in range" but the test body never calls/triggers run completion; only the initial multi-run render is asserted. Fixed: title shortened to match what's actually asserted.
+- [x] [Review][Defer] Session completion (`isComplete`) has no UI transition [src/components/rr-run-view.js, src/main.js] — deferred: out of scope until Story 1.5 (Liftoff) per this spec's own "Never" boundary; interim stuck state is an accepted consequence of building this story in isolation.
+- [x] [Review][Defer] No accessibility affordances (aria-live/focus management) for the Home→Run transition [src/components/rr-run-view.js, src/main.js] — deferred: consistent with Story 1.1's own precedent of deferring accessibility specifics; not yet tracked in deferred-work.md.
+- [x] [Review][Defer] `:host([hidden])` CSS fix not yet applied to `rr-liftoff`/`rr-settings` [src/components/rr-liftoff.js, src/components/rr-settings.js] — deferred: those components have no `:host` style yet (pre-existing stubs), so no override exists to break `hidden` today; only tracked in agent memory, not this repo's tracked backlog.
+
+**Rejected:**
+- `false` — `rr-run-view` renders with stale default state before a session starts: refuted — `connectedCallback()` calls `render(this._state)` on mount, correctly rendering the empty (`session: null`) state immediately.
+- `false` — `batchIntoRuns(runSize <= 0)` could infinite-loop: refuted — the only call site (`store.js`'s `startSession()`) always uses the default `RUN_SIZE = 20` constant; no path passes a caller-supplied `runSize`.
+- `low` — e2e test hardcodes IndexedDB literals (`'rekenraket'`, version `1`, `'cards'`) instead of importing constants from `db.js`: not worth fixing — `db.js` doesn't currently export those constants, so the fix adds new public surface, and the values are architecturally stable.
+- `low` — `rr-run-view.js`/`main.js` view-switching logic have no fast unit/DOM-level test, only e2e: not worth fixing — consistent with this repo's established precedent (`rr-fuel-tanks` is likewise only e2e-tested; no DOM-testing library is present for `node:test`).
+- `low` — double-clicking `#start-practice` could race two concurrent `startSession()` calls: carried from the implementation-time review — both calls settle to the same result given an unchanged deck; a proper guard is more than a direct fix.
+
 ## Implementation Notes
 
 - `getDueCards`/`batchIntoRuns` in `src/domain/session.js` are pure and unit-tested for the fresh-install (4), exactly-20, and 21-card (`[20, 1]`) matrix cases, plus the shallow-copy snapshot guarantee.
